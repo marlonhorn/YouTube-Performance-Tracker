@@ -4,6 +4,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -26,6 +27,7 @@ export function createTranslateLoader(): TranslateHttpLoader {
         useFactory: createTranslateLoader,
       },
     }),
+    IonicStorageModule.forRoot(),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

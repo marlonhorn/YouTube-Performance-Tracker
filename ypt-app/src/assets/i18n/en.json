@@ -23,3 +23,12 @@
     "api": "The YouTube API returned an error."
   }
 }
+
+"home": {
+  "saveButton": "Save entry",
+  "savePromptTitle": "Save entry",
+  "savePromptPlaceholder": "Add comment (optional)",
+  "saved": "Entry saved",
+  "duplicate": "This entry was already saved"
+}
+

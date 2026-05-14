@@ -3,6 +3,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
+import { StorageService, StoredEntry } from '../core/services/storage.service';
+import { v4 as uuidv4 } from 'uuid';
 
 interface YoutubeVideoItem {
   snippet: {
@@ -37,12 +39,85 @@ export class HomePage {
   public likeCount = 0;
   public commentCount = 0;
   public lastFetchDate: Date | null = null;
-
   constructor(
     private httpClient: HttpClient,
     private alertController: AlertController,
     private translateService: TranslateService,
+    private storageService: StorageService,
   ) {}
+
+  public async onSaveEntry(): Promise<void> {
+    if (!this.lastFetchDate) {
+      return;
+    }
+
+    const alert = await this.alertController.create({
+      header: this.translateService.instant('home.savePromptTitle'),
+      inputs: [
+        {
+          name: 'comment',
+          type: 'text',
+          placeholder: this.translateService.instant('home.savePromptPlaceholder'),
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Save',
+          handler: async (data) => {
+            await this.saveEntryToStorage(data.comment || '');
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  private async saveEntryToStorage(comment: string): Promise<void> {
+    const entry: StoredEntry = {
+      id: uuidv4(),
+      timestamp: Date.now(),
+      inputValue: this.videoId,
+      apiResponse: {
+        title: this.videoTitle,
+        channel: this.channelTitle,
+        publishedAt: this.publishedAt,
+        viewCount: this.viewCount,
+        likeCount: this.likeCount,
+        commentCount: this.commentCount,
+      },
+      userComment: comment,
+      hash: this.computeHash(),
+    };
+
+    try {
+      await this.storageService.save(entry);
+      const savedText = this.translateService.instant('home.saved');
+      const toast = await this.alertController.create({ header: savedText, buttons: ['OK'] });
+      await toast.present();
+    } catch (err) {
+      if ((err as Error).message === 'duplicate') {
+        this.showTranslatedError('errors.duplicate');
+        return;
+      }
+
+      this.showTranslatedError('errors.api');
+    }
+  }
+
+  private computeHash(): string {
+    // simple stable hash using base64 of JSON
+    const s = JSON.stringify({ id: this.videoId, v: this.viewCount, l: this.likeCount, c: this.commentCount });
+    try {
+      return btoa(unescape(encodeURIComponent(s)));
+    } catch {
+      return s;
+    }
+  }
 
   public onLoadVideoDataButton(): void {
     if (!this.isVideoIdValid()) {

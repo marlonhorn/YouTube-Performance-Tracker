@@ -23,3 +23,11 @@
     "api": "Die YouTube API hat einen Fehler zurückgegeben."
   }
 }
+
+"home": {
+  "saveButton": "Eintrag speichern",
+  "savePromptTitle": "Eintrag speichern",
+  "savePromptPlaceholder": "Kommentar (optional)",
+  "saved": "Eintrag gespeichert",
+  "duplicate": "Dieser Eintrag wurde bereits gespeichert"
+}

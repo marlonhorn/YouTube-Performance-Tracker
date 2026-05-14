@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import localeDe from '@angular/common/locales/de';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-export function createTranslateLoader(): TranslateHttpLoader {
-  return new TranslateHttpLoader();
-}
+registerLocaleData(localeDe, 'de');
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,17 +21,14 @@ export function createTranslateLoader(): TranslateHttpLoader {
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-      },
-    }),
+    TranslateModule.forRoot(),
     IonicStorageModule.forRoot(),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: LOCALE_ID, useFactory: () => navigator.language.startsWith('de') ? 'de' : 'en-US' },
     provideHttpClient(),
+    provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' }),
   ],
   bootstrap: [AppComponent],
 })

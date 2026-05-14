@@ -1,0 +1,160 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="yt-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="yt-page-title">{{ 'saved.title' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="entries.length > 0" (click)="onExportCsv()" [title]="'saved.export' | translate">
+        <ion-icon name="download-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="entries.length > 0" (click)="onDeleteAll()" color="danger" [title]="'saved.deleteAll' | translate">
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="yt-content">
+  <div class="yt-shell">
+
+    <!-- Comparison panel -->
+    <div class="compare-panel" *ngIf="comparisonPair.length === 2">
+      <div class="compare-panel__header">
+        <span class="compare-panel__title">{{ 'saved.comparing' | translate }}</span>
+        <button class="compare-panel__close" (click)="clearSelection()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+      <div class="compare-table">
+        <div class="compare-table__head">
+          <span></span>
+          <span class="compare-table__col-title" [title]="comparisonPair[0].title">{{ comparisonPair[0].title }}</span>
+          <span class="compare-table__diff-head">Δ</span>
+          <span class="compare-table__col-title" [title]="comparisonPair[1].title">{{ comparisonPair[1].title }}</span>
+        </div>
+        <div class="compare-table__row">
+          <span class="compare-table__label">{{ 'home.sortViews' | translate }}</span>
+          <span class="compare-table__val" [class.compare-table__val--winner]="comparisonPair[0].viewCount >= comparisonPair[1].viewCount">{{ comparisonPair[0].viewCount | number }}</span>
+          <span class="compare-table__diff">{{ percentDiff(comparisonPair[0].viewCount, comparisonPair[1].viewCount) }}</span>
+          <span class="compare-table__val" [class.compare-table__val--winner]="comparisonPair[1].viewCount >= comparisonPair[0].viewCount">{{ comparisonPair[1].viewCount | number }}</span>
+        </div>
+        <div class="compare-table__row">
+          <span class="compare-table__label">{{ 'home.sortLikes' | translate }}</span>
+          <span class="compare-table__val" [class.compare-table__val--winner]="comparisonPair[0].likeCount >= comparisonPair[1].likeCount">{{ comparisonPair[0].likeCount | number }}</span>
+          <span class="compare-table__diff">{{ percentDiff(comparisonPair[0].likeCount, comparisonPair[1].likeCount) }}</span>
+          <span class="compare-table__val" [class.compare-table__val--winner]="comparisonPair[1].likeCount >= comparisonPair[0].likeCount">{{ comparisonPair[1].likeCount | number }}</span>
+        </div>
+        <div class="compare-table__row">
+          <span class="compare-table__label">{{ 'home.sortComments' | translate }}</span>
+          <span class="compare-table__val" [class.compare-table__val--winner]="comparisonPair[0].commentCount >= comparisonPair[1].commentCount">{{ comparisonPair[0].commentCount | number }}</span>
+          <span class="compare-table__diff">{{ percentDiff(comparisonPair[0].commentCount, comparisonPair[1].commentCount) }}</span>
+          <span class="compare-table__val" [class.compare-table__val--winner]="comparisonPair[1].commentCount >= comparisonPair[0].commentCount">{{ comparisonPair[1].commentCount | number }}</span>
+        </div>
+        <div class="compare-table__row">
+          <span class="compare-table__label">{{ 'home.sortLikesViews' | translate }} %</span>
+          <span class="compare-table__val" [class.compare-table__val--winner]="(comparisonPair[0].likeCount / (comparisonPair[0].viewCount || 1)) >= (comparisonPair[1].likeCount / (comparisonPair[1].viewCount || 1))">
+            {{ (comparisonPair[0].likeCount / (comparisonPair[0].viewCount || 1) * 100).toFixed(2) }}%
+          </span>
+          <span class="compare-table__diff">{{ percentDiff(comparisonPair[0].likeCount / (comparisonPair[0].viewCount || 1), comparisonPair[1].likeCount / (comparisonPair[1].viewCount || 1)) }}</span>
+          <span class="compare-table__val" [class.compare-table__val--winner]="(comparisonPair[1].likeCount / (comparisonPair[1].viewCount || 1)) >= (comparisonPair[0].likeCount / (comparisonPair[0].viewCount || 1))">
+            {{ (comparisonPair[1].likeCount / (comparisonPair[1].viewCount || 1) * 100).toFixed(2) }}%
+          </span>
+        </div>
+        <div class="compare-table__row">
+          <span class="compare-table__label">{{ 'home.sortLikesComments' | translate }}</span>
+          <span class="compare-table__val" [class.compare-table__val--winner]="(comparisonPair[0].likeCount / (comparisonPair[0].commentCount || 1)) >= (comparisonPair[1].likeCount / (comparisonPair[1].commentCount || 1))">
+            {{ (comparisonPair[0].likeCount / (comparisonPair[0].commentCount || 1)).toFixed(1) }}
+          </span>
+          <span class="compare-table__diff">{{ percentDiff(comparisonPair[0].likeCount / (comparisonPair[0].commentCount || 1), comparisonPair[1].likeCount / (comparisonPair[1].commentCount || 1)) }}</span>
+          <span class="compare-table__val" [class.compare-table__val--winner]="(comparisonPair[1].likeCount / (comparisonPair[1].commentCount || 1)) >= (comparisonPair[0].likeCount / (comparisonPair[0].commentCount || 1))">
+            {{ (comparisonPair[1].likeCount / (comparisonPair[1].commentCount || 1)).toFixed(1) }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hint when 1 selected -->
+    <p class="compare-hint" *ngIf="selectedIds.size === 1">
+      {{ 'saved.selectOneMore' | translate }}
+    </p>
+
+    <ng-container *ngIf="entries.length > 0">
+      <p class="entry-count">{{ 'saved.count' | translate: { count: entries.length } }}</p>
+
+      <div class="saved-list">
+        <article class="saved-item" *ngFor="let entry of entries" [class.saved-item--selected]="selectedIds.has(entry.id)">
+
+          <label class="saved-item__check">
+            <input type="checkbox" [checked]="selectedIds.has(entry.id)" (change)="toggleSelect(entry.id)" [disabled]="selectedIds.size === 2 && !selectedIds.has(entry.id)" />
+          </label>
+
+          <div class="saved-item__thumb-wrap">
+            <img class="saved-item__thumb" [src]="entry.thumbnailUrl" [alt]="entry.title" loading="lazy" />
+          </div>
+
+          <div class="saved-item__body">
+            <div class="saved-item__title-row">
+              <h3 class="saved-item__title">{{ entry.title }}</h3>
+            </div>
+            <p class="saved-item__channel">{{ entry.channelTitle }}</p>
+
+            <div class="saved-item__stats">
+              <span class="stat-badge">
+                <svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                {{ entry.viewCount | number }}
+                <span class="delta delta--pos" *ngIf="delta(entry.viewCount, entry.prevViewCount) as d; else noVDelta">+{{ d | number }}</span>
+                <ng-template #noVDelta></ng-template>
+              </span>
+              <span class="stat-badge stat-badge--red">
+                <svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                {{ entry.likeCount | number }}
+                <span class="delta delta--pos" *ngIf="delta(entry.likeCount, entry.prevLikeCount) as d; else noLDelta">+{{ d | number }}</span>
+                <ng-template #noLDelta></ng-template>
+              </span>
+              <span class="stat-badge">
+                <svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+                {{ entry.commentCount | number }}
+              </span>
+            </div>
+
+            <div class="saved-item__tags" *ngIf="entry.tags && entry.tags.length > 0">
+              <span class="tag" *ngFor="let tag of entry.tags">{{ tag }}</span>
+            </div>
+
+            <p class="saved-item__note" *ngIf="entry.userNote">{{ entry.userNote }}</p>
+
+            <p class="saved-item__date">
+              {{ 'saved.savedAt' | translate }}: {{ entry.timestamp | date:'short' }}
+              <span *ngIf="entry.refreshedAt"> · {{ 'saved.refreshedAt' | translate }}: {{ entry.refreshedAt | date:'short' }}</span>
+            </p>
+          </div>
+
+          <div class="saved-item__actions">
+            <a class="action-btn" [href]="'https://www.youtube.com/watch?v=' + entry.videoId" target="_blank" rel="noopener" [title]="'home.openOnYoutube' | translate">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M19.59 7a.93.93 0 0 0-.82-.5h-4.26v1.87h3.46l-7.39 7.39 1.32 1.32 7.39-7.39v3.46H21V7.82a.93.93 0 0 0-.41-.82zM5 19h14v-5h-2v3H7V7h3V5H5v14z"/></svg>
+            </a>
+            <button class="action-btn" (click)="onRefresh(entry)" [disabled]="refreshingId === entry.id" [title]="'saved.refresh' | translate">
+              <ion-spinner name="crescent" *ngIf="refreshingId === entry.id" class="refresh-spinner"></ion-spinner>
+              <ion-icon name="refresh-outline" *ngIf="refreshingId !== entry.id"></ion-icon>
+            </button>
+            <button class="action-btn action-btn--danger" (click)="onDelete(entry.id)" [title]="'saved.delete' | translate">
+              <ion-icon name="trash-outline"></ion-icon>
+            </button>
+          </div>
+
+        </article>
+      </div>
+    </ng-container>
+
+    <div class="empty-state" *ngIf="entries.length === 0">
+      <div class="empty-state__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="52" height="52">
+          <path fill="currentColor" d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+        </svg>
+      </div>
+      <p class="empty-state__text">{{ 'saved.empty' | translate }}</p>
+    </div>
+
+  </div>
+</ion-content>

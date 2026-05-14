@@ -1,34 +1,72 @@
 {
-  "app": {
-    "title": "YouTube Performance Tracker"
+  "app": { "title": "YouTube Performance Tracker" },
+  "nav": { "saved": "Saved videos" },
+  "search": {
+    "catAll":           "All Categories",
+    "catMusic":         "Music",
+    "catSports":        "Sports",
+    "catGaming":        "Gaming",
+    "catPeople":        "People & Blogs",
+    "catComedy":        "Comedy",
+    "catEntertainment": "Entertainment",
+    "catNews":          "News & Politics",
+    "catEducation":     "Education",
+    "catTech":          "Science & Tech"
   },
   "home": {
-    "placeholder": "No data loaded yet.",
-    "videoIdLabel": "Video ID",
-    "videoIdPlaceholder": "e.g. dQw4w9WgXcQ",
-    "loadButton": "Load video data",
-    "loading": "Loading data...",
-    "views": "Views",
-    "likes": "Likes",
-    "comments": "Comments",
-    "publishedAt": "Published at",
-    "fetchedAt": "Fetched at"
+    "searchPlaceholder":  "Search YouTube videos...",
+    "searchButton":       "Search",
+    "clearSearch":        "Clear",
+    "placeholder":        "Search for videos above to track their performance.",
+    "noResults":          "No videos found for this search.",
+    "loading":            "Loading...",
+    "results":            "{{count}} results",
+    "loadMore":           "Load more",
+    "sortBy":             "Sort by",
+    "sortViews":          "Views",
+    "sortLikes":          "Likes",
+    "sortComments":       "Comments",
+    "sortLikesComments":  "Likes / Comments",
+    "sortLikesViews":     "Likes / Views",
+    "sortEngagement":     "Engagement Rate",
+    "sortCommentRate":    "Comments / Views",
+    "sortViewsPerDay":    "Views/Day",
+    "sortNewest":         "Newest",
+    "sortScore":          "Score",
+    "openOnYoutube":      "Open on YouTube",
+    "saveButton":         "Save",
+    "savePromptTitle":    "Save entry",
+    "savePromptPlaceholder": "Note (optional)",
+    "tagsPlaceholder":    "Tags: pop, music, viral",
+    "saved":              "Entry saved",
+    "alreadySaved":       "Already saved",
+    "cancel":             "Cancel"
+  },
+  "saved": {
+    "title":              "Saved Videos",
+    "empty":              "No saved entries yet. Search for a video and save it.",
+    "count":              "{{count}} saved",
+    "savedAt":            "Saved",
+    "refreshedAt":        "Updated",
+    "refresh":            "Refresh stats",
+    "export":             "Export CSV",
+    "delete":             "Delete",
+    "deleteAll":          "Delete all",
+    "deleteConfirmTitle": "Delete entry?",
+    "deleteConfirmMsg":   "This entry will be permanently deleted.",
+    "deleteAllTitle":     "Delete all entries?",
+    "deleteAllMsg":       "All saved entries will be permanently deleted.",
+    "cancel":             "Cancel",
+    "confirm":            "Delete",
+    "comparing":          "Comparing",
+    "selectOneMore":      "Select one more video to compare."
   },
   "errors": {
-    "title": "Error",
-    "network": "Network error. Please check your internet connection.",
-    "invalidVideoId": "The video ID is invalid. Please use 11 characters.",
-    "missingApiKey": "No YouTube API key configured. Please set it in environment.ts.",
+    "title":        "Error",
+    "network":      "Network error. Please check your internet connection.",
+    "missingApiKey":"No YouTube API key configured. Please set it in the .env file.",
     "noVideoFound": "No data found for this video ID.",
-    "api": "The YouTube API returned an error."
+    "api":          "The YouTube API returned an error.",
+    "duplicate":    "This entry has already been saved."
   }
 }
-
-"home": {
-  "saveButton": "Save entry",
-  "savePromptTitle": "Save entry",
-  "savePromptPlaceholder": "Add comment (optional)",
-  "saved": "Entry saved",
-  "duplicate": "This entry was already saved"
-}
-

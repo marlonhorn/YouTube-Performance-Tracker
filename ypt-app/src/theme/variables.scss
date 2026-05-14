@@ -1,2 +1,31 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+:root {
+  --yt-red: #ff0033;
+  --yt-red-hover: #ff1a4a;
+  --yt-bg: #0f0f0f;
+  --yt-surface: #1c1c1c;
+  --yt-surface-elevated: #272727;
+  --yt-border: #303030;
+  --yt-text: #f1f1f1;
+  --yt-text-muted: #aaaaaa;
+
+  --ion-color-primary: #ff0033;
+  --ion-color-primary-rgb: 255, 0, 51;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #e0002d;
+  --ion-color-primary-tint: #ff1a47;
+
+  --ion-background-color: #0f0f0f;
+  --ion-background-color-rgb: 15, 15, 15;
+  --ion-text-color: #f1f1f1;
+  --ion-text-color-rgb: 241, 241, 241;
+
+  --ion-toolbar-background: #0f0f0f;
+  --ion-toolbar-color: #f1f1f1;
+  --ion-item-background: #1c1c1c;
+
+  --ion-card-background: #1c1c1c;
+  --ion-card-color: #f1f1f1;
+
+  --ion-font-family: 'Roboto', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+}

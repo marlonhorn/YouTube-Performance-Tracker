@@ -1,33 +1,72 @@
 {
-  "app": {
-    "title": "YouTube Performance Tracker"
+  "app": { "title": "YouTube Performance Tracker" },
+  "nav": { "saved": "Gespeicherte Videos" },
+  "search": {
+    "catAll":           "Alle Kategorien",
+    "catMusic":         "Musik",
+    "catSports":        "Sport",
+    "catGaming":        "Gaming",
+    "catPeople":        "Menschen & Blogs",
+    "catComedy":        "Comedy",
+    "catEntertainment": "Unterhaltung",
+    "catNews":          "Nachrichten & Politik",
+    "catEducation":     "Bildung",
+    "catTech":          "Wissenschaft & Technik"
   },
   "home": {
-    "placeholder": "Noch keine Daten geladen.",
-    "videoIdLabel": "Video-ID",
-    "videoIdPlaceholder": "z. B. dQw4w9WgXcQ",
-    "loadButton": "Video-Daten laden",
-    "loading": "Daten werden geladen...",
-    "views": "Aufrufe",
-    "likes": "Likes",
-    "comments": "Kommentare",
-    "publishedAt": "Veröffentlicht am",
-    "fetchedAt": "Abgerufen am"
+    "searchPlaceholder":  "YouTube-Videos suchen...",
+    "searchButton":       "Suchen",
+    "clearSearch":        "Leeren",
+    "placeholder":        "Suche nach Videos, um deren Performance zu tracken.",
+    "noResults":          "Keine Videos für diese Suche gefunden.",
+    "loading":            "Lädt...",
+    "results":            "{{count}} Ergebnisse",
+    "loadMore":           "Mehr laden",
+    "sortBy":             "Sortieren nach",
+    "sortViews":          "Aufrufe",
+    "sortLikes":          "Likes",
+    "sortComments":       "Kommentare",
+    "sortLikesComments":  "Likes / Kommentare",
+    "sortLikesViews":     "Likes / Aufrufe",
+    "sortEngagement":     "Engagement-Rate",
+    "sortCommentRate":    "Kommentare / Aufrufe",
+    "sortViewsPerDay":    "Aufrufe/Tag",
+    "sortNewest":         "Neueste",
+    "sortScore":          "Score",
+    "openOnYoutube":      "Auf YouTube öffnen",
+    "saveButton":         "Speichern",
+    "savePromptTitle":    "Eintrag speichern",
+    "savePromptPlaceholder": "Notiz (optional)",
+    "tagsPlaceholder":    "Tags: pop, musik, viral",
+    "saved":              "Eintrag gespeichert",
+    "alreadySaved":       "Bereits gespeichert",
+    "cancel":             "Abbrechen"
+  },
+  "saved": {
+    "title":              "Gespeicherte Videos",
+    "empty":              "Noch keine Einträge. Suche ein Video und speichere es.",
+    "count":              "{{count}} gespeichert",
+    "savedAt":            "Gespeichert am",
+    "refreshedAt":        "Aktualisiert am",
+    "refresh":            "Statistiken aktualisieren",
+    "export":             "CSV exportieren",
+    "delete":             "Löschen",
+    "deleteAll":          "Alle löschen",
+    "deleteConfirmTitle": "Eintrag löschen?",
+    "deleteConfirmMsg":   "Dieser Eintrag wird dauerhaft gelöscht.",
+    "deleteAllTitle":     "Alle Einträge löschen?",
+    "deleteAllMsg":       "Alle gespeicherten Einträge werden dauerhaft gelöscht.",
+    "cancel":             "Abbrechen",
+    "confirm":            "Löschen",
+    "comparing":          "Vergleich",
+    "selectOneMore":      "Wähle ein weiteres Video zum Vergleichen."
   },
   "errors": {
-    "title": "Fehler",
-    "network": "Netzwerkfehler. Bitte prüfen Sie Ihre Internetverbindung.",
-    "invalidVideoId": "Die Video-ID ist ungültig. Bitte 11 Zeichen verwenden.",
-    "missingApiKey": "Kein YouTube API-Key gesetzt. Bitte in environment.ts eintragen.",
+    "title":        "Fehler",
+    "network":      "Netzwerkfehler. Bitte Internetverbindung prüfen.",
+    "missingApiKey":"Kein YouTube API-Key konfiguriert. Bitte in der .env-Datei eintragen.",
     "noVideoFound": "Für diese Video-ID wurden keine Daten gefunden.",
-    "api": "Die YouTube API hat einen Fehler zurückgegeben."
+    "api":          "Die YouTube API hat einen Fehler zurückgegeben.",
+    "duplicate":    "Dieser Eintrag wurde bereits gespeichert."
   }
-}
-
-"home": {
-  "saveButton": "Eintrag speichern",
-  "savePromptTitle": "Eintrag speichern",
-  "savePromptPlaceholder": "Kommentar (optional)",
-  "saved": "Eintrag gespeichert",
-  "duplicate": "Dieser Eintrag wurde bereits gespeichert"
 }

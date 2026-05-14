@@ -3,9 +3,23 @@
     "title": "YouTube Performance Tracker"
   },
   "home": {
-    "placeholder": "No data loaded yet."
+    "placeholder": "No data loaded yet.",
+    "videoIdLabel": "Video ID",
+    "videoIdPlaceholder": "e.g. dQw4w9WgXcQ",
+    "loadButton": "Load video data",
+    "loading": "Loading data...",
+    "views": "Views",
+    "likes": "Likes",
+    "comments": "Comments",
+    "publishedAt": "Published at",
+    "fetchedAt": "Fetched at"
   },
   "errors": {
-    "network": "Network error. Please check your internet connection."
+    "title": "Error",
+    "network": "Network error. Please check your internet connection.",
+    "invalidVideoId": "The video ID is invalid. Please use 11 characters.",
+    "missingApiKey": "No YouTube API key configured. Please set it in environment.ts.",
+    "noVideoFound": "No data found for this video ID.",
+    "api": "The YouTube API returned an error."
   }
 }

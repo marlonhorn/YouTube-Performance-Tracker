@@ -1,20 +1,55 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>{{ 'app.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list class="content-list">
+    <ion-item lines="full">
+      <ion-label position="stacked">{{ 'home.videoIdLabel' | translate }}</ion-label>
+      <ion-input
+        type="text"
+        maxlength="11"
+        [(ngModel)]="videoId"
+        [placeholder]="'home.videoIdPlaceholder' | translate"
+      ></ion-input>
+    </ion-item>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <ion-item lines="none">
+      <ion-button expand="block" [disabled]="isLoading" (click)="onLoadVideoDataButton()">
+        {{ 'home.loadButton' | translate }}
+      </ion-button>
+    </ion-item>
+
+    <ion-item lines="none" *ngIf="isLoading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <ion-label class="loading-text">{{ 'home.loading' | translate }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-card class="result-card" *ngIf="videoTitle; else noDataTemplate">
+    <ion-card-header>
+      <ion-card-title>{{ videoTitle }}</ion-card-title>
+      <ion-card-subtitle>{{ channelTitle }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p><strong>{{ 'home.views' | translate }}:</strong> {{ viewCount }}</p>
+      <p><strong>{{ 'home.likes' | translate }}:</strong> {{ likeCount }}</p>
+      <p><strong>{{ 'home.comments' | translate }}:</strong> {{ commentCount }}</p>
+      <p><strong>{{ 'home.publishedAt' | translate }}:</strong> {{ publishedAt }}</p>
+      <p *ngIf="lastFetchDate">
+        <strong>{{ 'home.fetchedAt' | translate }}:</strong> {{ lastFetchDate.toLocaleString() }}
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ng-template #noDataTemplate>
+    <ion-card class="result-card">
+      <ion-card-content>
+        {{ 'home.placeholder' | translate }}
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>

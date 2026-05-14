@@ -3,9 +3,23 @@
     "title": "YouTube Performance Tracker"
   },
   "home": {
-    "placeholder": "Noch keine Daten geladen."
+    "placeholder": "Noch keine Daten geladen.",
+    "videoIdLabel": "Video-ID",
+    "videoIdPlaceholder": "z. B. dQw4w9WgXcQ",
+    "loadButton": "Video-Daten laden",
+    "loading": "Daten werden geladen...",
+    "views": "Aufrufe",
+    "likes": "Likes",
+    "comments": "Kommentare",
+    "publishedAt": "Veröffentlicht am",
+    "fetchedAt": "Abgerufen am"
   },
   "errors": {
-    "network": "Netzwerkfehler. Bitte prüfen Sie Ihre Internetverbindung."
+    "title": "Fehler",
+    "network": "Netzwerkfehler. Bitte prüfen Sie Ihre Internetverbindung.",
+    "invalidVideoId": "Die Video-ID ist ungültig. Bitte 11 Zeichen verwenden.",
+    "missingApiKey": "Kein YouTube API-Key gesetzt. Bitte in environment.ts eintragen.",
+    "noVideoFound": "Für diese Video-ID wurden keine Daten gefunden.",
+    "api": "Die YouTube API hat einen Fehler zurückgegeben."
   }
 }

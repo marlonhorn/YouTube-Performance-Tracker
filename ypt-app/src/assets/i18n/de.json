@@ -1,0 +1,11 @@
+{
+  "app": {
+    "title": "YouTube Performance Tracker"
+  },
+  "home": {
+    "placeholder": "Noch keine Daten geladen."
+  },
+  "errors": {
+    "network": "Netzwerkfehler. Bitte prüfen Sie Ihre Internetverbindung."
+  }
+}
